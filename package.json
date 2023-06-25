@@ -7,6 +7,7 @@
 	"author": "Hyeonki Hong <hhk7734@gmail.com>",
 	"license": "MIT",
 	"scripts": {
+		"start": "node ./dist/main.js",
 		"dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/main.ts",
 		"build": "tsc"
 	},
