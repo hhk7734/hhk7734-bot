@@ -23,7 +23,8 @@ export function route(app: Probot) {
 			const commentUser = context.payload.comment.user.login;
 
 			const commands = comment
-				.split("\n")
+				.split(/\r?\n/)
+				.map((line) => line.trim())
 				.filter((line) => line.startsWith("/"))
 				.map((line) => line.split(" "));
 
