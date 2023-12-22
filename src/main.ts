@@ -1,4 +1,4 @@
-import { Server, ProbotOctokit, Probot } from "probot";
+import { Server, Probot } from "probot";
 import { readEnvOptions } from "probot/lib/bin/read-env-options";
 import { getLog } from "probot/lib/helpers/get-log";
 import { route } from "./app";

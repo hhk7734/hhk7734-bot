@@ -1,11 +1,11 @@
-import { Probot } from 'probot';
-import { executeCommandIfExists } from './command';
+import { Probot } from "probot";
+import { executeCommandIfExists } from "./command";
 
 export function route(app: Probot) {
 	app.onAny(async (context) => {
-		const repository = 'repository' in context.payload ? context.payload.repository?.name : null;
+		const repository = "repository" in context.payload ? context.payload.repository?.name : null;
 		const category = context.name;
-		const action = 'action' in context.payload ? context.payload.action : null;
+		const action = "action" in context.payload ? context.payload.action : null;
 
 		app.log.info({
 			repository,
@@ -14,9 +14,9 @@ export function route(app: Probot) {
 		});
 	});
 
-	app.on('issue_comment.created', async (context) => {
+	app.on("issue_comment.created", async (context) => {
 		if (context.payload.issue.pull_request) {
-			executeCommandIfExists(context, app.log.child({ name: 'command' }));
+			executeCommandIfExists(context, app.log.child({ name: "command" }));
 		}
 	});
 }

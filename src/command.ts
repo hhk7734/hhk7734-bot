@@ -1,8 +1,8 @@
-import { Context } from 'probot';
-import P from 'pino';
+import { Context } from "probot";
+import P from "pino";
 
 export async function executeCommandIfExists(
-	context: Context<'issue_comment.created'>,
+	context: Context<"issue_comment.created">,
 	logger: P.Logger,
 ) {
 	const repoName = context.payload.repository.name;
@@ -14,8 +14,8 @@ export async function executeCommandIfExists(
 	const commands = comment
 		.split(/\r?\n/)
 		.map((line) => line.trim())
-		.filter((line) => line.startsWith('/'))
-		.map((line) => line.split(' '));
+		.filter((line) => line.startsWith("/"))
+		.map((line) => line.split(" "));
 
 	if (commands.length === 0) {
 		return;
@@ -27,7 +27,7 @@ export async function executeCommandIfExists(
 			user: commentUser,
 			commands: commands,
 		},
-		'commands received',
+		"commands received",
 	);
 
 	const collaboratorPermissionLevel = await context.octokit.repos.getCollaboratorPermissionLevel({
@@ -38,13 +38,13 @@ export async function executeCommandIfExists(
 
 	const commentUserRole = collaboratorPermissionLevel.data.role_name;
 
-	if (!['admin', 'maintain', 'write'].includes(commentUserRole)) {
+	if (!["admin", "maintain", "write"].includes(commentUserRole)) {
 		const comment = context.issue({
 			body: `commands are only available to people with Admin || Maintainer || Write role on ${repoName}.`,
 		});
 		const res = await context.octokit.issues.createComment(comment);
 		if (res.status !== 201) {
-			logger.error({ status: res.status, response: res.data }, 'failed to create comment');
+			logger.error({ status: res.status, response: res.data }, "failed to create comment");
 		}
 		return;
 	}
@@ -55,7 +55,7 @@ export async function executeCommandIfExists(
 
 		switch (command) {
 			default:
-				logger.info({ command, args }, 'unknown command');
+				logger.info({ command, args }, "unknown command");
 				break;
 		}
 	}
