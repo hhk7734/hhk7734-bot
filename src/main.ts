@@ -31,9 +31,7 @@ async function startServer(appFn: (app: Probot) => void) {
 	const githubToken = process.env.GITHUB_TOKEN;
 
 	if (!githubToken && (!appId || !privateKey)) {
-		throw new Error(
-			"either `GITHUB_TOKEN` or (`APP_ID` and `PRIVATE_KEY[_PATH]`) are required",
-		);
+		throw new Error("either `GITHUB_TOKEN` or (`APP_ID` and `PRIVATE_KEY[_PATH]`) are required");
 	}
 
 	const logOptions = {
